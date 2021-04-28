@@ -20,3 +20,20 @@ def homepage():
     """renders homepage html"""
     users = User.query.all()
     return render_template('homepage.html', users = users)
+
+@app.route('/users/new')
+def show_add_user_form():
+    """Routes user to form to add new user"""
+    return render_template('add_user_form.html')
+
+@app.route('/users/new', methods = ['POST'])
+def add_user():
+    first_name = request.form['first_name']
+    last_name = request.form['last_name']
+    img_url = request.form['img_url']
+    img_url = img_url if img_url else None
+
+    user = User(first_name = first_name, last_name = last_name, image_url = img_url)
+    db.session.add(user)
+    db.session.commit()
+    return redirect('/')
