@@ -25,6 +25,8 @@ def connect_db(app):
   # set nullable to false
   # provide a default value in case one is not provided
 
+#TODO: Make unique combo of (id, first_name, last_name)
+
 class User(db.Model):
     """User."""
 
@@ -38,6 +40,5 @@ class User(db.Model):
     last_name = db.Column(db.Text,
                             nullable = False)
     image_url = db.Column(db.Text,
-                            unique = True,
                             nullable = False,
                             default = DEFAULT_IMG)
