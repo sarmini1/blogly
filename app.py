@@ -16,6 +16,11 @@ connect_db(app)
 db.create_all()
 
 @app.route('/')
+def redirects_to_users():
+    """redirects to /users"""
+    return redirect('/users')
+
+@app.route('/users')
 def homepage():
     """renders homepage html"""
     users = User.query.all()
@@ -28,6 +33,7 @@ def show_add_user_form():
 
 @app.route('/users/new', methods = ['POST'])
 def add_user():
+    """adds new user to database and redirects to home"""
     first_name = request.form['first_name']
     last_name = request.form['last_name']
     img_url = request.form['img_url']
@@ -40,5 +46,37 @@ def add_user():
 
 @app.route('/users/<int:user_id>')
 def display_user_info(user_id):
+    """displays user profile"""
     user = User.query.get(user_id)
     return render_template('display_user_info.html', user = user)
+
+@app.route('/users/<int:user_id>/edit') 
+def edit_user_form(user_id):
+    """displays edit user form"""
+    user = User.query.get(user_id)
+    return render_template('edit_user_info.html', user = user)   
+
+@app.route('/users/<int:user_id>/edit', methods = ['POST'])
+def edit_user(user_id):
+    """processes existing users edits"""
+    user = User.query.get(user_id)
+
+    first_name = request.form['first_name']
+    user.first_name = first_name if first_name else user.first_name
+
+    last_name = request.form['last_name']
+    user.last_name = last_name if last_name else user.last_name
+
+    img_url = request.form['img_url']
+    user.image_url = img_url if img_url else user.image_url
+
+    db.session.commit()
+    return redirect('/')
+
+@app.route('/users/<int:user_id>/delete', methods = ['POST']) 
+def delete_user(user_id):
+    """delete user from database"""
+    user = User.query.get(user_id)
+    db.session.delete(user)
+    db.session.commit()
+    return redirect('/users')   
