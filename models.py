@@ -24,6 +24,7 @@ def connect_db(app):
   # set nullable to false
   # provide a default value in case one is not provided
 
+
 class User(db.Model):
     """User."""
 
@@ -57,7 +58,7 @@ class User(db.Model):
 # user_id as a foreign key
   #nullable to false
   #int
-  # something to think about: orphan children, if we want to delete the user
+
 
 class Post(db.Model):
     """Posts"""
@@ -75,4 +76,4 @@ class Post(db.Model):
                             server_default=db.func.now())
     user_id = db.Column(db.Integer,
                         db.ForeignKey("users.id"),
-                        nullable=False)# could potentially remove this to account for orphan children situations
+                        nullable=False)

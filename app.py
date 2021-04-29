@@ -82,6 +82,7 @@ def edit_user(user_id):
 def delete_user(user_id):
     """delete user from database and redirects to user list"""
     user = User.query.get_or_404(user_id)
+    Post.query.filter(Post.user_id == user_id).delete()
     db.session.delete(user)
     db.session.commit()
     return redirect('/users')   
@@ -138,4 +139,4 @@ def submit_edit_post_form(post_id):
 
     db.session.commit()
     
-    return redirect(f'/posts/{post_id}')   
+    return redirect(f'/posts/{post_id}')
