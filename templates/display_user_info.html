@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<img src = "{{user.image_url}}">
-<h1>{{user.first_name}} {{user.last_name}}</h1>
-<form action = "/users/{{user.id}}/edit">
-<button>Edit</button>
+<img src="{{user.image_url}}">
+<h1 class="heading-1">{{user.first_name}} {{user.last_name}}</h1>
+
+<form action="/users/{{user.id}}/edit">
+  <button class="btn btn-primary mt-3">Edit</button>
 </form>
-<form action = "/users/{{user.id}}/delete" method = 'POST'>
-  <button>Delete</button>
-  </form>
+
+<form action="/users/{{user.id}}/delete" method='POST'>
+  <button class="btn btn-alert mt-2">Delete</button>
+</form>
+
 {% endblock %}

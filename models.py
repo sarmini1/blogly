@@ -3,8 +3,8 @@
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
-DEFAULT_IMG = "https://pbs.twimg.com/profile_images/1064544692707172354/LuZuUIkr_400x400.jpg"
 
+DEFAULT_IMG = "https://pbs.twimg.com/profile_images/1064544692707172354/LuZuUIkr_400x400.jpg"
 
 def connect_db(app):
     """Connect to database."""
@@ -21,11 +21,8 @@ def connect_db(app):
   # set nullable to false
 # each entry should have a value for image url, which:
   # text type, don't want to limit the length here
-  # should be unique
   # set nullable to false
   # provide a default value in case one is not provided
-
-#TODO: Make unique combo of (id, first_name, last_name)
 
 class User(db.Model):
     """User."""

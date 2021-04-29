@@ -39,9 +39,9 @@ def add_user():
     img_url = request.form['img_url']
     img_url = img_url if img_url else None
 
-    user = User(first_name = first_name, 
-                last_name = last_name, 
-                image_url = img_url)
+    user = User(first_name=first_name, 
+                last_name=last_name, 
+                image_url=img_url)
     db.session.add(user)
     db.session.commit()
     return redirect('/users')
@@ -49,19 +49,19 @@ def add_user():
 @app.route('/users/<int:user_id>')
 def display_user_info(user_id):
     """displays user profile"""
-    user = User.query.get(user_id)
-    return render_template('display_user_info.html', user = user)
+    user = User.query.get_or_404(user_id)
+    return render_template('display_user_info.html', user=user)
 
 @app.route('/users/<int:user_id>/edit') 
 def display_edit_user_form(user_id):
     """displays edit user form"""
-    user = User.query.get(user_id)
-    return render_template('edit_user_info.html', user = user)   
+    user = User.query.get_or_404(user_id)
+    return render_template('edit_user_info.html', user=user)   
 
 @app.route('/users/<int:user_id>/edit', methods = ['POST'])
 def edit_user(user_id):
     """changes existing users info in database and redirects to user list"""
-    user = User.query.get(user_id)
+    user = User.query.get_or_404(user_id)
 
     first_name = request.form['first_name']
     user.first_name = first_name if first_name else user.first_name
@@ -77,8 +77,8 @@ def edit_user(user_id):
 
 @app.route('/users/<int:user_id>/delete', methods = ['POST']) 
 def delete_user(user_id):
-    """delete user from database"""
-    user = User.query.get(user_id)
+    """delete user from database and redirects to user list"""
+    user = User.query.get_or_404(user_id)
     db.session.delete(user)
     db.session.commit()
     return redirect('/users')   

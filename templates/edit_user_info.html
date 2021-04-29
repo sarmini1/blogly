@@ -3,16 +3,30 @@
 
 <h1>Edit</h1>
 
-<form action = "/users/{{ user.id }}/edit" method = 'POST'>
-First name:
-<input name = "first_name" type = "text" value = "{{ user.first_name }}" placeholder="Enter a first name">
-Last name:
-<input name = "last_name" type = "text" value = "{{ user.last_name }}" placeholder="Enter a last name">
-Image URL:
-<input name = "img_url" type = "text" value = "{{ user.image_url }}" placeholder="Provide an image of this user">
+<form action="/users/{{ user.id }}/edit" method='POST'>
+    First name:
+    <input 
+        name="first_name" 
+        type="text" 
+        value="{{ user.first_name }}" 
+        placeholder="Enter a first name">
 
-<button>Save</button>
+    Last name:
+    <input 
+        name="last_name" 
+        type="text" 
+        value="{{ user.last_name }}" 
+        placeholder="Enter a last name">
+
+    Image URL:
+    <input 
+        name="img_url" 
+        type="text" 
+        value="{{ user.image_url }}" 
+        placeholder="Provide an image of this user">
+
+    <button class="btn btn-primary">Save</button>
 </form>
-<form action = "/users/{{ user.id }}"><button>Cancel</button></form>
+<form action="/users/{{ user.id }}"><button class="btn btn-light">Cancel</button></form>
 
 {% endblock %}
