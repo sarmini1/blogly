@@ -15,7 +15,7 @@ whiskey = User(first_name='Whiskey', last_name="Dog")
 bowser = User(first_name='Bowser', last_name="Pug")
 spike = User(first_name='Spike', last_name="Porcupine")
 
-#add posts 
+#Add posts 
 user_1_post_1 = Post(title = "my first post", content = "a;skldjfa;skldfjsa", user_id = 1)
 user_1_post_2 = Post(title = "my second post", content = "sdlfkldfksj", user_id = 1)
 user_2_post_1 = Post(title = "cool stuff", content = "this is user 2's post", user_id = 2)
@@ -28,9 +28,10 @@ db.session.add(whiskey)
 db.session.add(bowser)
 db.session.add(spike)
 
+# Commit the users!
 db.session.commit()
 
-# add new posts to session
+# Add new posts to session
 db.session.add(user_1_post_1)
 db.session.add(user_1_post_2)
 db.session.add(user_2_post_1)

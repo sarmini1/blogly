@@ -77,7 +77,7 @@ class BloglyViewTestCase(TestCase):
             resp = client.post("/users/new", 
                                 data = {'first_name': 'Henry', 
                                         'last_name': 'Pennyworth',
-                                        'img_url':''})
+                                        'image_url':''})
             html = resp.get_data(as_text=True)
 
             self.assertEqual(resp.status_code, 302)
@@ -89,7 +89,7 @@ class BloglyViewTestCase(TestCase):
             resp = client.post("/users/new", 
                                 data = {'first_name': 'Henry', 
                                         'last_name': 'Pennyworth',
-                                        'img_url':''}, 
+                                        'image_url':''}, 
                                 follow_redirects=True)
             html = resp.get_data(as_text=True)
 

@@ -39,7 +39,7 @@ class User(db.Model):
     image_url = db.Column(db.Text,
                             nullable = False,
                             default = DEFAULT_IMG)
-
+    posts = db.relationship('Post', backref='user')
 
 # class Post:
 # table name would be posts

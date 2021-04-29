@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- add user form for testing -->
+<h1 class="display-4">Edit Post</h1>
+
+<form action="/posts/{{ post.id }}/edit" method='POST'>
+    
+    <p class="mt-3"><h4>Title:</h4>
+    <input name="title" class="form-control col-6" type="text" value="{{ post.title }}"></p>
+
+    <p><h4>Content:</h4>
+    <input name="content" class="form-control col-6" rows="4" value="{{ post.content }}"></p>
+
+    <a class="btn btn-secondary" href="/users/{{ post.user.id }}">Cancel</a>
+
+    <button class="btn btn-primary">Edit</button>
+
+</form>
+
+{% endblock %}

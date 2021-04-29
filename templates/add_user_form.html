@@ -4,17 +4,52 @@
 <h1>Create a User</h1>
 
 <form action="/users/new" method='POST'>
-    First name:
-    <input name="first_name" type="text" required placeholder="Enter a first name">
 
-    Last name:
-    <input name="last_name" type="text" required placeholder="Enter a last name">
+    <div class="form-group mt-3">
+        <label for="first_name">First Name:</label>
+        <div>
+            <input 
+                class="form-control col-4" 
+                type="text" 
+                name="first_name" 
+                type="text" 
+                required 
+                placeholder="Enter a first name">
+        </div>
+    </div>
 
-    Image URL:
-    <input name="img_url" type="text" placeholder="Provide an image of this user">
+    <div class="form-group">
+        <label for="last_name">Last Name:</label>
+        <div>
+            <input 
+                class="form-control col-4" 
+                type="text" name="last_name" 
+                type="text" 
+                required 
+                placeholder="Enter a last name">
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label for="image_url">Image URL:</label>
+        <div>
+            <input 
+                class="form-control col-6" 
+                type="text" 
+                name="image_url" 
+                type="text" 
+                placeholder="Provide an image of this user">
+        </div>
+    </div>
 
-    <button>Submit!</button>
+    <button class="btn btn-primary">Submit!</button>
 
 </form>
+    <!-- First name:
+    <input name="first_name" type="text" required placeholder="Enter a first name"> -->
+    <!-- Last name:
+    <input name="last_name" type="text" required placeholder="Enter a last name"> -->
+    <!-- Image URL:
+    <input name="img_url" type="text" placeholder="Provide an image of this user"> -->
 
 {% endblock %}

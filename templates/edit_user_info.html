@@ -4,7 +4,55 @@
 <h1>Edit</h1>
 
 <form action="/users/{{ user.id }}/edit" method='POST'>
-    First name:
+
+    <div class="form-group mt-3">
+        <label for="first_name">First Name:</label>
+        <div>
+            <input 
+                class="form-control col-4" 
+                type="text" 
+                value="{{ user.first_name }}" 
+                name="first_name" 
+                type="text"
+                placeholder="Enter a first name">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="last_name">Last Name:</label>
+        <div>
+            <input 
+                class="form-control col-4" 
+                type="text" 
+                name="last_name" 
+                value="{{ user.last_name }}" 
+                type="text"
+                placeholder="Enter a last name">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="image_url">Image URL:</label>
+        <div>
+            <input 
+                class="form-control col-6" 
+                type="text" 
+                name="image_url" 
+                value="{{ user.image_url }}" 
+                type="text"
+                placeholder="Provide an image of this user">
+        </div>
+    </div>
+
+
+    <a href="/users/{{ user.id }}" class="btn btn-secondary">Cancel</a>
+
+    <button class="btn btn-primary">Save</button>
+
+</form>
+
+
+<!-- First name:
     <input 
         name="first_name" 
         type="text" 
@@ -23,10 +71,6 @@
         name="img_url" 
         type="text" 
         value="{{ user.image_url }}" 
-        placeholder="Provide an image of this user">
-
-    <button class="btn btn-primary">Save</button>
-</form>
-<form action="/users/{{ user.id }}"><button class="btn btn-light">Cancel</button></form>
+        placeholder="Provide an image of this user"> -->
 
 {% endblock %}
