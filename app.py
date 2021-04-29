@@ -21,10 +21,10 @@ def redirects_to_users():
     return redirect('/users')
 
 @app.route('/users')
-def homepage():
-    """renders homepage html"""
+def displays_users():
+    """renders user list html"""
     users = User.query.all()
-    return render_template('homepage.html', users = users)
+    return render_template('user_list.html', users = users)
 
 @app.route('/users/new')
 def show_add_user_form():
@@ -33,16 +33,18 @@ def show_add_user_form():
 
 @app.route('/users/new', methods = ['POST'])
 def add_user():
-    """adds new user to database and redirects to home"""
+    """adds new user to database and redirects to user list"""
     first_name = request.form['first_name']
     last_name = request.form['last_name']
     img_url = request.form['img_url']
     img_url = img_url if img_url else None
 
-    user = User(first_name = first_name, last_name = last_name, image_url = img_url)
+    user = User(first_name = first_name, 
+                last_name = last_name, 
+                image_url = img_url)
     db.session.add(user)
     db.session.commit()
-    return redirect('/')
+    return redirect('/users')
 
 @app.route('/users/<int:user_id>')
 def display_user_info(user_id):
@@ -51,14 +53,14 @@ def display_user_info(user_id):
     return render_template('display_user_info.html', user = user)
 
 @app.route('/users/<int:user_id>/edit') 
-def edit_user_form(user_id):
+def display_edit_user_form(user_id):
     """displays edit user form"""
     user = User.query.get(user_id)
     return render_template('edit_user_info.html', user = user)   
 
 @app.route('/users/<int:user_id>/edit', methods = ['POST'])
 def edit_user(user_id):
-    """processes existing users edits"""
+    """changes existing users info in database and redirects to user list"""
     user = User.query.get(user_id)
 
     first_name = request.form['first_name']
@@ -71,7 +73,7 @@ def edit_user(user_id):
     user.image_url = img_url if img_url else user.image_url
 
     db.session.commit()
-    return redirect('/')
+    return redirect('/users')
 
 @app.route('/users/<int:user_id>/delete', methods = ['POST']) 
 def delete_user(user_id):
