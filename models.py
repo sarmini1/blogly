@@ -42,6 +42,9 @@ class User(db.Model):
                             default = DEFAULT_IMG)
     posts = db.relationship('Post', backref='user')
 
+    def __repr__(self):
+      return f'<User {self.first_name} {self.last_name}>' 
+
 # class Post:
 # table name would be posts
 # primary key will be id, which:
@@ -77,3 +80,49 @@ class Post(db.Model):
     user_id = db.Column(db.Integer,
                         db.ForeignKey("users.id"),
                         nullable=False)
+    tags = db.relationship('Tag', secondary='posts_tags', backref='posts')
+
+    def __repr__(self):
+      return f'<Post {self.title} {self.id}>'            
+
+
+# class Tag:
+#__tablename__: tags
+# id: primary key, int
+# name: text, unique, not null
+# tag.posts
+
+class Tag(db.Model):
+  """ Tags. """
+  __tablename__ = "tags"
+
+  id = db.Column(db.Integer,
+                  primary_key=True,
+                  autoincrement=True)
+
+  name = db.Column(db.Text,
+                    nullable=False,
+                    unique=True)               
+
+  def __repr__(self):
+    return f'<Tag {self.name} {self.id}>' 
+
+#class PostTag:
+#__tablename__: posts_tags
+#post_id: foreign key, primary key
+#tag_id: foreign key, primary key
+
+class PostTag(db.Model):
+  """Posts + Tags"""
+  __tablename__ = "posts_tags"
+
+  post_id = db.Column(db.Integer,
+                      db.ForeignKey("posts.id"),
+                      primary_key=True)
+
+  tag_id = db.Column(db.Integer,
+                      db.ForeignKey("tags.id"),
+                      primary_key=True)                      
+
+  def __repr__(self):
+    return f'<PostTag {self.post_id} {self.tag_id}>' 
