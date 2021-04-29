@@ -53,7 +53,7 @@ def display_user_info(user_id):
     posts = Post.query.filter(Post.user_id == user_id).all()
 
     return render_template('display_user_info.html',
-                            user=user, posts=posts)
+                            user=user, posts=posts) # could change this to posts = user.posts
 
 @app.route('/users/<int:user_id>/edit') 
 def display_edit_user_form(user_id):
