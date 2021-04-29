@@ -2,7 +2,7 @@
 
 from flask import Flask, request, render_template, redirect
 from flask_debugtoolbar import DebugToolbarExtension
-from models import db, connect_db, User
+from models import db, connect_db, User, Post
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///blogly'
@@ -50,7 +50,10 @@ def add_user():
 def display_user_info(user_id):
     """displays user profile"""
     user = User.query.get_or_404(user_id)
-    return render_template('display_user_info.html', user=user)
+    posts = Post.query.filter(Post.user_id == user_id).all()
+
+    return render_template('display_user_info.html',
+                            user=user, posts=posts)
 
 @app.route('/users/<int:user_id>/edit') 
 def display_edit_user_form(user_id):

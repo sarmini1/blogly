@@ -39,3 +39,40 @@ class User(db.Model):
     image_url = db.Column(db.Text,
                             nullable = False,
                             default = DEFAULT_IMG)
+
+
+# class Post:
+# table name would be posts
+# primary key will be id, which:
+  # integer that autoincrements
+# title will be:
+  # text(50)
+  # nullable to false
+# content will be:
+  # text, no length limit
+  # nullable to false
+#created_at, which:
+  # type of timestamp with time zone
+  # set default time to current time
+# user_id as a foreign key
+  #nullable to false
+  #int
+  # something to think about: orphan children, if we want to delete the user
+
+class Post(db.Model):
+    """Posts"""
+    
+    __tablename__ = "posts"
+
+    id = db.Column(db.Integer,
+                    primary_key=True,
+                    autoincrement=True)
+    title = db.Column(db.String(50),
+                        nullable=False)
+    content = db.Column(db.Text,
+                        nullable=False)
+    created_at = db.Column(db.DateTime(timezone=True),
+                            server_default=db.func.now())
+    user_id = db.Column(db.Integer,
+                        db.ForeignKey("users.id"),
+                        nullable=False)# could potentially remove this to account for orphan children situations
