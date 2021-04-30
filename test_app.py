@@ -40,23 +40,23 @@ class BloglyViewTestCase(TestCase): #could be helpful to separate test case clas
 
         db.session.rollback()
 
-    def test_users_redirect(self):
-        """redirect status received"""
-        with app.test_client() as client:
-            resp = client.get("/")
-            html = resp.get_data(as_text=True)
+    # def test_users_redirect(self):
+    #     """redirect status received"""
+    #     with app.test_client() as client:
+    #         resp = client.get("/")
+    #         html = resp.get_data(as_text=True)
 
-            self.assertEqual(resp.status_code, 302)
-            self.assertEqual(resp.location, "http://localhost/users")
+    #         self.assertEqual(resp.status_code, 302)
+    #         self.assertEqual(resp.location, "http://localhost/users")
 
-    def test_users_redirection_followed(self):
-        """redirects to correct page"""
-        with app.test_client() as client:
-            resp = client.get("/", follow_redirects=True)
-            html = resp.get_data(as_text=True)
+    # def test_users_redirection_followed(self):
+    #     """redirects to correct page"""
+    #     with app.test_client() as client:
+    #         resp = client.get("/", follow_redirects=True)
+    #         html = resp.get_data(as_text=True)
 
-            self.assertEqual(resp.status_code, 200)
-            self.assertIn('user page for testing', html)  
+    #         self.assertEqual(resp.status_code, 200)
+    #         self.assertIn('user page for testing', html)  
 
     def test_users_html(self):
         """renders user list html"""

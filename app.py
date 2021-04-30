@@ -16,9 +16,10 @@ connect_db(app)
 db.create_all()
 
 @app.route('/')
-def redirects_to_users():
-    """redirects to /users"""
-    return redirect('/users')
+def landing_page():
+    """renders homescreen"""
+    posts = Post.query.order_by(Post.created_at.desc()).limit(5).all()
+    return render_template('homepage.html', posts=posts)
 
 @app.route('/users')
 def displays_users():
@@ -91,15 +92,18 @@ def delete_user(user_id):
 def display_add_new_post_form(user_id):
     """renders add new post for user html"""
     user = User.query.get_or_404(user_id)
-    return render_template('add_post_form.html', user=user)
+    tags = Tag.query.all()
+    return render_template('add_post_form.html', user=user, tags=tags)
 
 @app.route('/users/<int:user_id>/posts/new', methods=['POST'])
 def add_new_post(user_id):
     """add new post to database and redirects to user info page"""
     title = request.form['title']
     content = request.form['content']
+    tag_ids = [int(num) for num in request.form.getlist("tags")]
+    tags = Tag.query.filter(Tag.id.in_(tag_ids)).all()
 
-    post = Post(title=title, content=content, user_id=user_id)
+    post = Post(title=title, content=content, user_id=user_id, tags=tags)
 
     db.session.add(post)
     db.session.commit()
@@ -124,7 +128,8 @@ def delete_user_post(post_id):
 def display_edit_post_form(post_id):
     """displays edit post form"""
     post = Post.query.get_or_404(post_id)
-    return render_template('edit_post_form.html', post=post)
+    tags = Tag.query.all()
+    return render_template('edit_post_form.html', post=post, tags=tags)
 
 @app.route('/posts/<int:post_id>/edit', methods=['POST'])
 def submit_edit_post_form(post_id):
@@ -136,6 +141,9 @@ def submit_edit_post_form(post_id):
 
     content = request.form['content']
     post.content = content if content else post.content
+
+    tag_ids = [int(num) for num in request.form.getlist("tags")]
+    post.tags = Tag.query.filter(Tag.id.in_(tag_ids)).all()
 
     db.session.commit()
     
@@ -190,7 +198,6 @@ def delete_tag(tag_id):
     for post in tag.posts:
         post_tag = PostTag.query.get((post.id, tag_id))
         db.session.delete(post_tag)
-        db.session.commit()
     db.session.delete(tag)
     db.session.commit()
     return redirect('/tags')

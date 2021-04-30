@@ -54,5 +54,23 @@ db.session.add(sad)
 db.session.add(funny)
 db.session.add(basic)
 
+# Commit the tags!
+db.session.commit()
+
+# Add PostTags
+post_tag1 = PostTag(post_id=user_1_post_1.id, tag_id=fun.id)
+post_tag2 = PostTag(post_id=user_1_post_1.id, tag_id=sad.id)
+post_tag3 = PostTag(post_id=user_1_post_2.id, tag_id=fun.id)
+post_tag4 = PostTag(post_id=user_1_post_2.id, tag_id=basic.id)
+post_tag5 = PostTag(post_id=user_3_post_3.id, tag_id=funny.id)
+post_tag5 = PostTag(post_id=user_3_post_3.id, tag_id=sad.id)
+
+# Add PostTags to session
+db.session.add(post_tag1)
+db.session.add(post_tag2)
+db.session.add(post_tag3)
+db.session.add(post_tag4)
+db.session.add(post_tag5)
+
 # Commit--otherwise, this never gets saved!
 db.session.commit()

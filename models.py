@@ -1,5 +1,6 @@
 """Models for Blogly."""
 
+import datetime
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
@@ -75,12 +76,18 @@ class Post(db.Model):
                         nullable=False)
     content = db.Column(db.Text,
                         nullable=False)
-    created_at = db.Column(db.DateTime(timezone=True),
-                            server_default=db.func.now())
+    created_at = db.Column(db.DateTime,
+                            nullable=False,
+                            default=datetime.datetime.now)
     user_id = db.Column(db.Integer,
                         db.ForeignKey("users.id"),
                         nullable=False)
     tags = db.relationship('Tag', secondary='posts_tags', backref='posts')
+
+    @property
+    def friendly_date(self):
+        """Return nicely-formatted date."""
+        return self.created_at.strftime("%a %b %-d  %Y, %-I:%M %p")
 
     def __repr__(self):
       return f'<Post {self.title} {self.id}>'            
