@@ -125,4 +125,4 @@ class PostTag(db.Model):
                       primary_key=True)                      
 
   def __repr__(self):
-    return f'<PostTag {self.post_id} {self.tag_id}>' 
+    return f'<PostTag {self.post_id} {self.tag_id}>'

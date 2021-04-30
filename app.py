@@ -140,5 +140,57 @@ def submit_edit_post_form(post_id):
     db.session.commit()
     
     return redirect(f'/posts/{post_id}')
-
+    
 @app.route('/tags')
+def display_tags():
+    """shows user complete list of tags"""
+    tags = Tag.query.all()
+    return render_template("tag_list.html", tags=tags)
+
+@app.route('/tags/new')
+def display_add_tag_form():
+    """shows user the form to add a new tag"""
+    return render_template("add_tag_form.html")
+
+@app.route('/tags/new', methods=['POST'])
+def add_new_tag():
+    """adds a new tag to the tag list"""
+    tag_name = request.form['name']
+    new_tag = Tag(name=tag_name)
+    db.session.add(new_tag)
+    db.session.commit()
+    return redirect('/tags')
+
+@app.route('/tags/<int:tag_id>')
+def show_tag_info(tag_id):
+    """displays the posts associated with a tag"""
+    tag = Tag.query.get(tag_id)
+    return render_template("tag_info.html", tag=tag)
+
+@app.route('/tags/<int:tag_id>/edit')
+def display_edit_tag_form(tag_id):
+    """displays form to edit a tag"""
+    tag = Tag.query.get(tag_id)
+    return render_template("edit_tag_form.html", tag=tag)
+
+@app.route('/tags/<int:tag_id>/edit', methods=['POST'])
+def process_tag_edit(tag_id):
+    """processes edits to a tag and redirects"""
+    tag = Tag.query.get(tag_id)
+    tag_name_edit = request.form['name']
+    tag.name = tag_name_edit if tag_name_edit else tag.name
+    db.session.commit()
+
+    return redirect('/tags')
+
+@app.route('/tags/<int:tag_id>/delete', methods=['POST'])
+def delete_tag(tag_id):
+    """deletes tag and map between that tag to posts"""
+    tag = Tag.query.get(tag_id)
+    for post in tag.posts:
+        post_tag = PostTag.query.get((post.id, tag_id))
+        db.session.delete(post_tag)
+        db.session.commit()
+    db.session.delete(tag)
+    db.session.commit()
+    return redirect('/tags')

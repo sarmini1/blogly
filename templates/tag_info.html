@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- tag posts page for testing -->
+<h1 class="display-3"> {{tag.name}} </h1>
+<ul>
+{% for tag_post in tag.posts %}
+<li><h5>
+  <a href="/posts/{{tag_post.id}}">
+    {{tag_post.title}}
+  </a>
+</h5></li>
+{% endfor %}
+</ul>
+
+<form action ="/tags/{{tag.id}}/edit">
+  <button class="btn btn-primary mt-3">Edit Tag!</button>
+</form>
+
+<form action ="/tags/{{tag.id}}/delete" method = "POST">
+  <button class="btn btn-primary mt-3">Delete Tag!</button>
+</form>
+
+{% endblock %}
